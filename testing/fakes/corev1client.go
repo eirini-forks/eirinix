@@ -200,15 +200,16 @@ func (fake *FakeCoreV1Interface) ComponentStatuses() v1.ComponentStatusInterface
 	ret, specificReturn := fake.componentStatusesReturnsOnCall[len(fake.componentStatusesArgsForCall)]
 	fake.componentStatusesArgsForCall = append(fake.componentStatusesArgsForCall, struct {
 	}{})
+	stub := fake.ComponentStatusesStub
+	fakeReturns := fake.componentStatusesReturns
 	fake.recordInvocation("ComponentStatuses", []interface{}{})
 	fake.componentStatusesMutex.Unlock()
-	if fake.ComponentStatusesStub != nil {
-		return fake.ComponentStatusesStub()
+	if stub != nil {
+		return stub()
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.componentStatusesReturns
 	return fakeReturns.result1
 }
 
@@ -253,15 +254,16 @@ func (fake *FakeCoreV1Interface) ConfigMaps(arg1 string) v1.ConfigMapInterface {
 	fake.configMapsArgsForCall = append(fake.configMapsArgsForCall, struct {
 		arg1 string
 	}{arg1})
+	stub := fake.ConfigMapsStub
+	fakeReturns := fake.configMapsReturns
 	fake.recordInvocation("ConfigMaps", []interface{}{arg1})
 	fake.configMapsMutex.Unlock()
-	if fake.ConfigMapsStub != nil {
-		return fake.ConfigMapsStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.configMapsReturns
 	return fakeReturns.result1
 }
 
@@ -313,15 +315,16 @@ func (fake *FakeCoreV1Interface) Endpoints(arg1 string) v1.EndpointsInterface {
 	fake.endpointsArgsForCall = append(fake.endpointsArgsForCall, struct {
 		arg1 string
 	}{arg1})
+	stub := fake.EndpointsStub
+	fakeReturns := fake.endpointsReturns
 	fake.recordInvocation("Endpoints", []interface{}{arg1})
 	fake.endpointsMutex.Unlock()
-	if fake.EndpointsStub != nil {
-		return fake.EndpointsStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.endpointsReturns
 	return fakeReturns.result1
 }
 
@@ -373,15 +376,16 @@ func (fake *FakeCoreV1Interface) Events(arg1 string) v1.EventInterface {
 	fake.eventsArgsForCall = append(fake.eventsArgsForCall, struct {
 		arg1 string
 	}{arg1})
+	stub := fake.EventsStub
+	fakeReturns := fake.eventsReturns
 	fake.recordInvocation("Events", []interface{}{arg1})
 	fake.eventsMutex.Unlock()
-	if fake.EventsStub != nil {
-		return fake.EventsStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.eventsReturns
 	return fakeReturns.result1
 }
 
@@ -433,15 +437,16 @@ func (fake *FakeCoreV1Interface) LimitRanges(arg1 string) v1.LimitRangeInterface
 	fake.limitRangesArgsForCall = append(fake.limitRangesArgsForCall, struct {
 		arg1 string
 	}{arg1})
+	stub := fake.LimitRangesStub
+	fakeReturns := fake.limitRangesReturns
 	fake.recordInvocation("LimitRanges", []interface{}{arg1})
 	fake.limitRangesMutex.Unlock()
-	if fake.LimitRangesStub != nil {
-		return fake.LimitRangesStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.limitRangesReturns
 	return fakeReturns.result1
 }
 
@@ -492,15 +497,16 @@ func (fake *FakeCoreV1Interface) Namespaces() v1.NamespaceInterface {
 	ret, specificReturn := fake.namespacesReturnsOnCall[len(fake.namespacesArgsForCall)]
 	fake.namespacesArgsForCall = append(fake.namespacesArgsForCall, struct {
 	}{})
+	stub := fake.NamespacesStub
+	fakeReturns := fake.namespacesReturns
 	fake.recordInvocation("Namespaces", []interface{}{})
 	fake.namespacesMutex.Unlock()
-	if fake.NamespacesStub != nil {
-		return fake.NamespacesStub()
+	if stub != nil {
+		return stub()
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.namespacesReturns
 	return fakeReturns.result1
 }
 
@@ -544,15 +550,16 @@ func (fake *FakeCoreV1Interface) Nodes() v1.NodeInterface {
 	ret, specificReturn := fake.nodesReturnsOnCall[len(fake.nodesArgsForCall)]
 	fake.nodesArgsForCall = append(fake.nodesArgsForCall, struct {
 	}{})
+	stub := fake.NodesStub
+	fakeReturns := fake.nodesReturns
 	fake.recordInvocation("Nodes", []interface{}{})
 	fake.nodesMutex.Unlock()
-	if fake.NodesStub != nil {
-		return fake.NodesStub()
+	if stub != nil {
+		return stub()
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.nodesReturns
 	return fakeReturns.result1
 }
 
@@ -597,15 +604,16 @@ func (fake *FakeCoreV1Interface) PersistentVolumeClaims(arg1 string) v1.Persiste
 	fake.persistentVolumeClaimsArgsForCall = append(fake.persistentVolumeClaimsArgsForCall, struct {
 		arg1 string
 	}{arg1})
+	stub := fake.PersistentVolumeClaimsStub
+	fakeReturns := fake.persistentVolumeClaimsReturns
 	fake.recordInvocation("PersistentVolumeClaims", []interface{}{arg1})
 	fake.persistentVolumeClaimsMutex.Unlock()
-	if fake.PersistentVolumeClaimsStub != nil {
-		return fake.PersistentVolumeClaimsStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.persistentVolumeClaimsReturns
 	return fakeReturns.result1
 }
 
@@ -656,15 +664,16 @@ func (fake *FakeCoreV1Interface) PersistentVolumes() v1.PersistentVolumeInterfac
 	ret, specificReturn := fake.persistentVolumesReturnsOnCall[len(fake.persistentVolumesArgsForCall)]
 	fake.persistentVolumesArgsForCall = append(fake.persistentVolumesArgsForCall, struct {
 	}{})
+	stub := fake.PersistentVolumesStub
+	fakeReturns := fake.persistentVolumesReturns
 	fake.recordInvocation("PersistentVolumes", []interface{}{})
 	fake.persistentVolumesMutex.Unlock()
-	if fake.PersistentVolumesStub != nil {
-		return fake.PersistentVolumesStub()
+	if stub != nil {
+		return stub()
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.persistentVolumesReturns
 	return fakeReturns.result1
 }
 
@@ -709,15 +718,16 @@ func (fake *FakeCoreV1Interface) PodTemplates(arg1 string) v1.PodTemplateInterfa
 	fake.podTemplatesArgsForCall = append(fake.podTemplatesArgsForCall, struct {
 		arg1 string
 	}{arg1})
+	stub := fake.PodTemplatesStub
+	fakeReturns := fake.podTemplatesReturns
 	fake.recordInvocation("PodTemplates", []interface{}{arg1})
 	fake.podTemplatesMutex.Unlock()
-	if fake.PodTemplatesStub != nil {
-		return fake.PodTemplatesStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.podTemplatesReturns
 	return fakeReturns.result1
 }
 
@@ -769,15 +779,16 @@ func (fake *FakeCoreV1Interface) Pods(arg1 string) v1.PodInterface {
 	fake.podsArgsForCall = append(fake.podsArgsForCall, struct {
 		arg1 string
 	}{arg1})
+	stub := fake.PodsStub
+	fakeReturns := fake.podsReturns
 	fake.recordInvocation("Pods", []interface{}{arg1})
 	fake.podsMutex.Unlock()
-	if fake.PodsStub != nil {
-		return fake.PodsStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.podsReturns
 	return fakeReturns.result1
 }
 
@@ -828,15 +839,16 @@ func (fake *FakeCoreV1Interface) RESTClient() rest.Interface {
 	ret, specificReturn := fake.rESTClientReturnsOnCall[len(fake.rESTClientArgsForCall)]
 	fake.rESTClientArgsForCall = append(fake.rESTClientArgsForCall, struct {
 	}{})
+	stub := fake.RESTClientStub
+	fakeReturns := fake.rESTClientReturns
 	fake.recordInvocation("RESTClient", []interface{}{})
 	fake.rESTClientMutex.Unlock()
-	if fake.RESTClientStub != nil {
-		return fake.RESTClientStub()
+	if stub != nil {
+		return stub()
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.rESTClientReturns
 	return fakeReturns.result1
 }
 
@@ -881,15 +893,16 @@ func (fake *FakeCoreV1Interface) ReplicationControllers(arg1 string) v1.Replicat
 	fake.replicationControllersArgsForCall = append(fake.replicationControllersArgsForCall, struct {
 		arg1 string
 	}{arg1})
+	stub := fake.ReplicationControllersStub
+	fakeReturns := fake.replicationControllersReturns
 	fake.recordInvocation("ReplicationControllers", []interface{}{arg1})
 	fake.replicationControllersMutex.Unlock()
-	if fake.ReplicationControllersStub != nil {
-		return fake.ReplicationControllersStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.replicationControllersReturns
 	return fakeReturns.result1
 }
 
@@ -941,15 +954,16 @@ func (fake *FakeCoreV1Interface) ResourceQuotas(arg1 string) v1.ResourceQuotaInt
 	fake.resourceQuotasArgsForCall = append(fake.resourceQuotasArgsForCall, struct {
 		arg1 string
 	}{arg1})
+	stub := fake.ResourceQuotasStub
+	fakeReturns := fake.resourceQuotasReturns
 	fake.recordInvocation("ResourceQuotas", []interface{}{arg1})
 	fake.resourceQuotasMutex.Unlock()
-	if fake.ResourceQuotasStub != nil {
-		return fake.ResourceQuotasStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.resourceQuotasReturns
 	return fakeReturns.result1
 }
 
@@ -1001,15 +1015,16 @@ func (fake *FakeCoreV1Interface) Secrets(arg1 string) v1.SecretInterface {
 	fake.secretsArgsForCall = append(fake.secretsArgsForCall, struct {
 		arg1 string
 	}{arg1})
+	stub := fake.SecretsStub
+	fakeReturns := fake.secretsReturns
 	fake.recordInvocation("Secrets", []interface{}{arg1})
 	fake.secretsMutex.Unlock()
-	if fake.SecretsStub != nil {
-		return fake.SecretsStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.secretsReturns
 	return fakeReturns.result1
 }
 
@@ -1061,15 +1076,16 @@ func (fake *FakeCoreV1Interface) ServiceAccounts(arg1 string) v1.ServiceAccountI
 	fake.serviceAccountsArgsForCall = append(fake.serviceAccountsArgsForCall, struct {
 		arg1 string
 	}{arg1})
+	stub := fake.ServiceAccountsStub
+	fakeReturns := fake.serviceAccountsReturns
 	fake.recordInvocation("ServiceAccounts", []interface{}{arg1})
 	fake.serviceAccountsMutex.Unlock()
-	if fake.ServiceAccountsStub != nil {
-		return fake.ServiceAccountsStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.serviceAccountsReturns
 	return fakeReturns.result1
 }
 
@@ -1121,15 +1137,16 @@ func (fake *FakeCoreV1Interface) Services(arg1 string) v1.ServiceInterface {
 	fake.servicesArgsForCall = append(fake.servicesArgsForCall, struct {
 		arg1 string
 	}{arg1})
+	stub := fake.ServicesStub
+	fakeReturns := fake.servicesReturns
 	fake.recordInvocation("Services", []interface{}{arg1})
 	fake.servicesMutex.Unlock()
-	if fake.ServicesStub != nil {
-		return fake.ServicesStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.servicesReturns
 	return fakeReturns.result1
 }
 

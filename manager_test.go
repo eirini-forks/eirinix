@@ -23,7 +23,6 @@ import (
 	"k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
-	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/apimachinery/pkg/watch"
@@ -34,6 +33,7 @@ import (
 	"k8s.io/client-go/rest"
 	crc "sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/webhook"
+	crclient "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
 var _ = Describe("Extension Manager", func() {
@@ -145,7 +145,7 @@ var _ = Describe("Extension Manager", func() {
 	})
 
 	It("sets the operator namespace label", func() {
-		client.UpdateCalls(func(_ context.Context, object runtime.Object, _ ...crc.UpdateOption) error {
+		client.UpdateCalls(func(_ context.Context, object crclient.Object, _ ...crc.UpdateOption) error {
 			ns := object.(*unstructured.Unstructured)
 			labels := ns.GetLabels()
 			Expect(labels["eirini-x-ns"]).To(Equal(eiriniManager.Options.Namespace))
@@ -187,7 +187,7 @@ var _ = Describe("Extension Manager", func() {
 					},
 				},
 			}
-			client.GetCalls(func(context context.Context, nn types.NamespacedName, object runtime.Object) error {
+			client.GetCalls(func(context context.Context, nn types.NamespacedName, object crclient.Object) error {
 				switch object.(type) {
 				case *unstructured.Unstructured:
 					secret.DeepCopyInto(object.(*unstructured.Unstructured))
@@ -208,7 +208,7 @@ var _ = Describe("Extension Manager", func() {
 		})
 
 		It("generates the webhook configuration", func() {
-			client.CreateCalls(func(context context.Context, object runtime.Object, _ ...crc.CreateOption) error {
+			client.CreateCalls(func(context context.Context, object crclient.Object, _ ...crc.CreateOption) error {
 				config := object.(*admissionregistrationv1beta1.MutatingWebhookConfiguration)
 				Expect(config.Name).To(Equal("eirini-x-mutating-hook"))
 				Expect(len(config.Webhooks)).To(Equal(1))

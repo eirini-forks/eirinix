@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	eirinix "code.cloudfoundry.org/eirinix"
-	"k8s.io/api/admission/v1beta1"
+	"k8s.io/api/admission/v1"
 	corev1 "k8s.io/api/core/v1"
 	"sigs.k8s.io/controller-runtime/pkg/webhook/admission"
 )
@@ -20,7 +20,7 @@ type testExtension struct {
 }
 
 func (e *testExtension) Handle(context.Context, eirinix.Manager, *corev1.Pod, admission.Request) admission.Response {
-	res := admission.Response{AdmissionResponse: v1beta1.AdmissionResponse{AuditAnnotations: map[string]string{"name": e.Name}}}
+	res := admission.Response{AdmissionResponse: v1.AdmissionResponse{AuditAnnotations: map[string]string{"name": e.Name}}}
 	return res
 }
 

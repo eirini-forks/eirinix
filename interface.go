@@ -48,7 +48,7 @@ type Watcher interface {
 // An Eirini Reconciler must implement a Reconcile method which is called when
 // a new request is being created.
 type Reconciler interface {
-	Reconcile(request reconcile.Request) (reconcile.Result, error)
+	Reconcile(ctx context.Context, request reconcile.Request) (reconcile.Result, error)
 	Register(Manager) error
 }
 

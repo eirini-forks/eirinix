@@ -3,7 +3,6 @@ package testing
 import (
 	"context"
 	"fmt"
-	"time"
 
 	eirinix "code.cloudfoundry.org/eirinix"
 	log "code.cloudfoundry.org/quarks-utils/pkg/ctxlog"
@@ -16,21 +15,18 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/predicate"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 	"sigs.k8s.io/controller-runtime/pkg/source"
+	"sigs.k8s.io/controller-runtime/pkg/client"
 )
 
 type testReconciler struct {
 	mgr eirinix.Manager
 }
 
-func (r *testReconciler) Reconcile(request reconcile.Request) (reconcile.Result, error) {
-	ctx := log.NewContextWithRecorder(r.mgr.GetContext(), "test-reconciler", r.mgr.GetKubeManager().GetEventRecorderFor("test-recorder"))
+func (r *testReconciler) Reconcile(ctx context.Context, request reconcile.Request) (reconcile.Result, error) {
+	logCtx := log.NewContextWithRecorder(r.mgr.GetContext(), "test-reconciler", r.mgr.GetKubeManager().GetEventRecorderFor("test-recorder"))
 	pod := &corev1.Pod{}
 
-	// Set the ctx to be Background, as the top-level context for incoming requests.
-	ctx, cancel := context.WithTimeout(ctx, 10*time.Second)
-	defer cancel()
-
-	log.Info(ctx, "Reconciling pod ", request.NamespacedName)
+	log.Info(logCtx, "Reconciling pod ", request.NamespacedName)
 	if err := r.mgr.GetKubeManager().GetClient().Get(ctx, request.NamespacedName, pod); err != nil {
 		return reconcile.Result{Requeue: true}, err
 	}
@@ -39,7 +35,7 @@ func (r *testReconciler) Reconcile(request reconcile.Request) (reconcile.Result,
 	pod.ObjectMeta.Annotations["touched"] = "yes"
 	err := r.mgr.GetKubeManager().GetClient().Update(ctx, pod)
 	if err != nil {
-		log.WithEvent(pod, "UpdateError").Errorf(ctx, "Failed to update pod annotation '%s/%s' (%v): %s", pod.Namespace, pod.Name, pod.ResourceVersion, err)
+		log.WithEvent(pod, "UpdateError").Errorf(logCtx, "Failed to update pod annotation '%s/%s' (%v): %s", pod.Namespace, pod.Name, pod.ResourceVersion, err)
 		return reconcile.Result{Requeue: true}, nil
 	}
 	return reconcile.Result{}, nil
@@ -62,19 +58,19 @@ func (r *testReconciler) Register(m eirinix.Manager) error {
 		GenericFunc: func(e event.GenericEvent) bool { return true },
 		UpdateFunc:  func(e event.UpdateEvent) bool { return true },
 	}
-	err = c.Watch(&source.Kind{Type: &corev1.Pod{}}, &handler.EnqueueRequestsFromMapFunc{
-		ToRequests: handler.ToRequestsFunc(func(a handler.MapObject) []reconcile.Request {
-			pod := a.Object.(*corev1.Pod)
+	err = c.Watch(&source.Kind{Type: &corev1.Pod{}}, handler.EnqueueRequestsFromMapFunc(
+	  func(a client.Object) []reconcile.Request {
+		pod := a.(*corev1.Pod)
 
-			result := []reconcile.Request{}
-			result = append(result, reconcile.Request{
-				NamespacedName: types.NamespacedName{
-					Name:      pod.Name,
-					Namespace: pod.Namespace,
-				}})
-			return result
-		}),
-	}, p)
+		result := []reconcile.Request{}
+		result = append(result, reconcile.Request{
+		  NamespacedName: types.NamespacedName{
+			Name:      pod.Name,
+			Namespace: pod.Namespace,
+		  }})
+		  return result
+		},
+	), p)
 	if err != nil {
 		return errors.Wrapf(err, "Watching secrets failed in Restart controller failed.")
 	}
@@ -86,15 +82,11 @@ type EditImageReconciler struct {
 	mgr eirinix.Manager
 }
 
-func (r *EditImageReconciler) Reconcile(request reconcile.Request) (reconcile.Result, error) {
-	ctx := log.NewContextWithRecorder(r.mgr.GetContext(), "test-reconciler", r.mgr.GetKubeManager().GetEventRecorderFor("test-recorder"))
+func (r *EditImageReconciler) Reconcile(ctx context.Context, request reconcile.Request) (reconcile.Result, error) {
+	logCtx := log.NewContextWithRecorder(r.mgr.GetContext(), "test-reconciler", r.mgr.GetKubeManager().GetEventRecorderFor("test-recorder"))
 	pod := &corev1.Pod{}
 
-	// Set the ctx to be Background, as the top-level context for incoming requests.
-	ctx, cancel := context.WithTimeout(ctx, 10*time.Second)
-	defer cancel()
-
-	log.Info(ctx, "Reconciling pod ", request.NamespacedName)
+	log.Info(logCtx, "Reconciling pod ", request.NamespacedName)
 	if err := r.mgr.GetKubeManager().GetClient().Get(ctx, request.NamespacedName, pod); err != nil {
 		return reconcile.Result{Requeue: true}, err
 	}
@@ -103,7 +95,7 @@ func (r *EditImageReconciler) Reconcile(request reconcile.Request) (reconcile.Re
 	err := r.mgr.GetKubeManager().GetClient().Update(ctx, pod)
 	if err != nil {
 		fmt.Println("Error during pod update", err)
-		log.WithEvent(pod, "UpdateError").Errorf(ctx, "Failed to update pod annotation '%s/%s' (%v): %s", pod.Namespace, pod.Name, pod.ResourceVersion, err)
+		log.WithEvent(pod, "UpdateError").Errorf(logCtx, "Failed to update pod annotation '%s/%s' (%v): %s", pod.Namespace, pod.Name, pod.ResourceVersion, err)
 		return reconcile.Result{Requeue: true}, nil
 	}
 	return reconcile.Result{}, nil
@@ -126,19 +118,19 @@ func (r *EditImageReconciler) Register(m eirinix.Manager) error {
 		GenericFunc: func(e event.GenericEvent) bool { return false },
 		UpdateFunc:  func(e event.UpdateEvent) bool { return true },
 	}
-	err = c.Watch(&source.Kind{Type: &corev1.Pod{}}, &handler.EnqueueRequestsFromMapFunc{
-		ToRequests: handler.ToRequestsFunc(func(a handler.MapObject) []reconcile.Request {
-			pod := a.Object.(*corev1.Pod)
+	err = c.Watch(&source.Kind{Type: &corev1.Pod{}}, handler.EnqueueRequestsFromMapFunc(
+	  func(a client.Object) []reconcile.Request {
+		pod := a.(*corev1.Pod)
 
-			result := []reconcile.Request{}
-			result = append(result, reconcile.Request{
-				NamespacedName: types.NamespacedName{
-					Name:      pod.Name,
-					Namespace: pod.Namespace,
-				}})
-			return result
-		}),
-	}, p)
+		result := []reconcile.Request{}
+		result = append(result, reconcile.Request{
+		  NamespacedName: types.NamespacedName{
+			Name:      pod.Name,
+			Namespace: pod.Namespace,
+		  }})
+		  return result
+		},
+	), p)
 	if err != nil {
 		return errors.Wrapf(err, "Watching secrets failed in Restart controller failed.")
 	}

@@ -31,15 +31,16 @@ func (fake *FakeInterface) ResultChan() <-chan watch.Event {
 	ret, specificReturn := fake.resultChanReturnsOnCall[len(fake.resultChanArgsForCall)]
 	fake.resultChanArgsForCall = append(fake.resultChanArgsForCall, struct {
 	}{})
+	stub := fake.ResultChanStub
+	fakeReturns := fake.resultChanReturns
 	fake.recordInvocation("ResultChan", []interface{}{})
 	fake.resultChanMutex.Unlock()
-	if fake.ResultChanStub != nil {
-		return fake.ResultChanStub()
+	if stub != nil {
+		return stub()
 	}
 	if specificReturn {
 		return ret.result1
 	}
-	fakeReturns := fake.resultChanReturns
 	return fakeReturns.result1
 }
 
@@ -82,9 +83,10 @@ func (fake *FakeInterface) Stop() {
 	fake.stopMutex.Lock()
 	fake.stopArgsForCall = append(fake.stopArgsForCall, struct {
 	}{})
+	stub := fake.StopStub
 	fake.recordInvocation("Stop", []interface{}{})
 	fake.stopMutex.Unlock()
-	if fake.StopStub != nil {
+	if stub != nil {
 		fake.StopStub()
 	}
 }
